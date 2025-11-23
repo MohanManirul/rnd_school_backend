@@ -61,10 +61,8 @@ class AuthController extends Controller
        
 
     public function LogOut(){
-    
-      return redirect('adminpanel')
-        ->with('success', 'Successfully logged out!')
-        ->cookie('token', '', -1);
+       return  ResponseHelper::Out('success',"",200)->cookie('token', '', -1); 
+        ;
 
       }
 
