@@ -38,7 +38,8 @@ class AuthController extends Controller
                 $role = 'superadmin';
                 $token = JWTToken::CreateToken($request->email ,$superAdmin->id,$role);
                 
-              return  ResponseHelper::Out('success',$token,200)->cookie('token', $token, 60*24*30, '/' );      
+              return  ResponseHelper::Out('success',$token,200)->cookie('token', $token, 43200, '/', null, false, true, false, 'None');
+;      
 
                       }
               elseif( $user ){
@@ -48,7 +49,8 @@ class AuthController extends Controller
                 $role = 'admin';
                 $token = JWTToken::CreateToken($request->email ,$user->id,$role);
               
-                return  ResponseHelper::Out('success',$role,200)->cookie('token',$token,60*24*30); 
+                return  ResponseHelper::Out('success',$role,200)->cookie('token', $token, 43200, '/', null, false, true, false, 'None');
+; 
               }
 
           } 

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Backend\Auth\AuthController;
+use App\Http\Controllers\Backend\ModuleController;
 use App\Http\Controllers\Backend\UserModule\DashboardController;
 
 Route::controller(AuthController::class)
@@ -11,6 +12,15 @@ Route::controller(AuthController::class)
     ->group(function () {
         Route::post('/login-check', 'loginCheck')->name('login.check');
         Route::post('/log-out', 'LogOut')->name('logout');
+
+    });
+
+  Route::controller(ModuleController::class)->group(function () {
+            Route::get('/modules', 'modules')->name('modules');
+        });
+
+    Route::controller(ModuleController::class)->group(function () {
+        Route::get('/modules', 'modules')->name('modules');
     });
 
 Route::prefix('/admindashboard')
@@ -23,8 +33,9 @@ Route::prefix('/admindashboard')
             Route::get('/', 'dashboard')->name('dashboard');
         });
 
-        
-        
+        // 🟢 DashboardController routes
+      
+
         // 🟢 Include additional route files
         require_once base_path('routes/backend/shift.php');
     });
