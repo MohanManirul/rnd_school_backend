@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('sub_modules', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('menu_value')->default('All Classes'); 
+            $table->string('route')->nullable(); 
+            $table->boolean('has_sub_route')->default(false); 
+            $table->boolean('show_sub_route')->default(false);
+            $table->string('active_link')->nullable(); 
             $table->string('key')->unique();
             $table->integer('sequence');
-            $table->string('route');
-
             $table->foreignId('module_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

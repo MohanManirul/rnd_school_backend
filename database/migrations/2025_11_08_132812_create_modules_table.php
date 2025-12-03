@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('menu_value')->default('Class Room'); 
+            $table->boolean('has_sub_route')->default(false); 
+            $table->boolean('show_sub_route')->default(false); 
+            $table->string('route')->nullable(); 
+            $table->string('active_link')->nullable(); 
+            $table->json('sub_routes')->nullable(); 
             $table->string('key')->unique();
-            $table->string('icon');
+            $table->string('icon')->nullable();
             $table->integer('sequence')->unique();
-            $table->string('route')->nullable();
             $table->timestamps();
         });
     }
@@ -30,3 +34,5 @@ return new class extends Migration
         Schema::dropIfExists('modules');
     }
 };
+
+            
