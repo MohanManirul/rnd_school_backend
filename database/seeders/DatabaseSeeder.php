@@ -13,9 +13,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
 
             SuperAdminSeeder::class,
-            ModuleSeeder::class,
-            SubModuleSeeder::class,
-            PermissionSeeder::class,
+            MenusSeeder::class,
+            UserGroupsSeeder::class,
+            AccessControlsSeeder::class
+            // ModuleSeeder::class,
+            // SubModuleSeeder::class,
+            // PermissionSeeder::class,
             // RoleSeeder::class,
             // // AboutSeeder::class,
             // UserSeeder::class,
