@@ -21,6 +21,7 @@ class MenusSeeder extends Seeder
         DB::table('menus')->insert([
             [
                 'id'            => 1,
+                'menu_id'       => 1,
                 'parent_id'     => null,
                 'ordering'      => 1,
                 'menu_name'     => "dashboard",
@@ -32,6 +33,7 @@ class MenusSeeder extends Seeder
             ],
             [
                 'id'            => 2,
+                'menu_id'       => 2,
                 'parent_id'     => null,
                 'ordering'      => 2,
                 'menu_name'     => "users",
@@ -43,6 +45,7 @@ class MenusSeeder extends Seeder
             ], 
             [
                 'id'            => 3,
+                'menu_id'       => 3,
                 'parent_id'     => null,
                 'ordering'      => 3,
                 'menu_name'     => "settings",
@@ -54,6 +57,7 @@ class MenusSeeder extends Seeder
             ], 
             [
                 'id'            => 4,
+                'menu_id'       => 4,
                 'parent_id'     => null,
                 'ordering'      => 4,
                 'menu_name'     => "student_mng",
@@ -65,6 +69,7 @@ class MenusSeeder extends Seeder
             ], 
             [
                 'id'            => 5,
+                'menu_id'       => 5,
                 'parent_id'     => 3,
                 'ordering'      => 5,
                 'menu_name'     => "session_mng",
@@ -76,6 +81,7 @@ class MenusSeeder extends Seeder
             ], 
             [
                 'id'            => 6,
+                'menu_id'       => 6,
                 'parent_id'     => 3,
                 'ordering'      => 2,
                 'menu_name'     => "class_mng",

@@ -2,15 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Backend\Auth\AuthController;
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\Backend\ModuleController;
 use App\Http\Controllers\Backend\UserModule\DashboardController;
 
 Route::controller(AuthController::class)
-    ->prefix('/adminpanel')
-    ->name('superadmin.') // <- name prefix
+    ->prefix('/v1')
     ->group(function () {
-        Route::post('/login-check', 'loginCheck')->name('login.check');
+        Route::post('/register', 'register')->name('register');
         Route::post('/log-out', 'LogOut')->name('logout');
 
     });

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
+            $table->integer('menu_id');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->integer('ordering');
             $table->string('menu_name');
