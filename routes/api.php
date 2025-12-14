@@ -10,7 +10,7 @@ Route::controller(AuthController::class)
     ->prefix('/v1')
     ->group(function () {
         Route::post('/register', 'register')->name('register');
-        Route::post('/log-out', 'LogOut')->name('logout');
+        Route::post('/login', 'login')->name('login');
 
     });
 
