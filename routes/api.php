@@ -3,16 +3,30 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\Backend\ModuleController;
 use App\Http\Controllers\Backend\UserModule\DashboardController;
 
-Route::controller(AuthController::class)
-    ->prefix('/v1')
-    ->group(function () {
+Route::prefix('v1')->group(function () {
+
+    // Auth routes
+    Route::controller(AuthController::class)->group(function () {
         Route::post('/register', 'register')->name('register');
         Route::post('/login', 'login')->name('login');
-
     });
+
+    // Profile routes (Protected)
+    Route::middleware('auth:sanctum')
+        ->controller(ProfileController::class)
+        ->group(function () {
+            Route::get('/profile', 'profile')->name('profile');
+            Route::post('/logout', 'logout')->name('logout');
+            Route::post('/profile-update', 'profileUpdate')->name('profile.update');
+        });
+
+});
+
+
 
   Route::controller(ModuleController::class)->group(function () {
             Route::get('/modules', 'modules')->name('modules');
