@@ -13,15 +13,17 @@ Route::prefix('v1')->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('/register', 'register')->name('register');
         Route::post('/login', 'login')->name('login');
+        
     });
 
+           
     // Profile routes (Protected)
     Route::middleware('auth:sanctum')
         ->controller(ProfileController::class)
         ->group(function () {
-            Route::get('/profile', 'profile')->name('profile');
+            Route::get('/me', 'me')->name('me');
             Route::post('/logout', 'logout')->name('logout');
-            Route::post('/profile-update', 'profileUpdate')->name('profile.update');
+            Route::patch('/profile-update', 'profileUpdate')->name('profile.update');
         });
 
 });
