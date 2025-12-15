@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ProfileController;
+use App\Http\Controllers\API\TaskController;
 use App\Http\Controllers\Backend\ModuleController;
 use App\Http\Controllers\Backend\UserModule\DashboardController;
 
@@ -24,6 +25,9 @@ Route::prefix('v1')->group(function () {
             Route::get('/me', 'me')->name('me');
             Route::post('/logout', 'logout')->name('logout');
             Route::patch('/profile-update', 'profileUpdate')->name('profile.update');
+            
+            // Task Routes for crud
+            Route::apiResource('tasks', TaskController::class) ; 
         });
 
 });
