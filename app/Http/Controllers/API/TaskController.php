@@ -82,4 +82,16 @@ class TaskController extends BaseApiController
         }
     }
 
+    public function forceDelete($id):JsonResponse
+    {
+       try {
+            $task = Task::withTrashed()->findOrFail($id) ;
+            $this->authorize('restore', $task) ;
+            $task->forceDelete();
+            return $this->success(null , 'Task deleted successfully');
+       } catch(\Throwable $e) {
+            return $this->error('Failed to soft-delete the task' , 500 , $e) ;
+       }
+    }
+
 }
