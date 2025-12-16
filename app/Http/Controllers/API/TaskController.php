@@ -10,6 +10,7 @@ use App\Http\Resources\Task\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Throwable;
 
 class TaskController extends BaseApiController
 {
@@ -65,8 +66,20 @@ class TaskController extends BaseApiController
             $task->delete() ;
             return $this->success(null, 'Task soft-deleted');
        } catch (\Throwable $e){
-            return $this->error('Failed to soft-delete the task' , 500 , $e->getMessage()) ;
+            return $this->error('Failed to soft-delete the task' , 500 , $e) ;
        } 
+    }
+
+    public function restore($id):JsonResponse
+    {
+        try {
+            $task = Task::withTrashed()->findOrFail($id) ;
+            $this->authorize('restore', $task) ;
+            $task->restore();
+            return $this->success(new TaskResource($task), 'Task re-stored successfully');
+        } catch (\Throwable $e) {
+            return $this->error('Failed to soft-delete the task' , 500 , $e) ;
+        }
     }
 
 }
