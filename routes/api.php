@@ -31,7 +31,10 @@ Route::prefix('v1')->group(function () {
 
             Route::post('task/{id}/restore', [TaskController::class,'restore']) ; 
             Route::delete('task/{id}/force-delete', [TaskController::class,'forceDelete']) ; 
+            Route::get('/filter-by-status', [TaskController::class,'taskFilter']) ; 
         });
+
+    
 
 });
 

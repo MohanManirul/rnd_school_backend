@@ -9,6 +9,7 @@ use App\Http\Resources\Task\TaskCollection;
 use App\Http\Resources\Task\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Throwable;
 
@@ -93,5 +94,27 @@ class TaskController extends BaseApiController
             return $this->error('Failed to soft-delete the task' , 500 , $e) ;
        }
     }
+
+    //search
+    public function taskFilter(Request $request)
+        {
+            $validated = $request->validate([
+                'status' => 'required|in:new,in_progress,completed,canceled',
+            ]);
+            
+            try {
+                
+                $tasks = Auth::user()
+                    ->tasks()
+                    ->where('status', $validated['status'])
+                    ->latest()
+                    ->paginate(10);
+
+                return $this->success( new TaskCollection($tasks),'Filtered Task');
+
+            } catch (\Throwable $e) {
+                return $this->error('Failed to filter task',500,$e );
+            }
+        }
 
 }
