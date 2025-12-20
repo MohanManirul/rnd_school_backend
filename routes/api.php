@@ -25,13 +25,18 @@ Route::prefix('v1')->group(function () {
             Route::get('/me', 'me')->name('me');
             Route::post('/logout', 'logout')->name('logout');
             Route::patch('/profile-update', 'profileUpdate')->name('profile.update');
-            
+            Route::get('tasks/trashed', [TaskController::class, 'trashed']);
+            Route::delete('tasks/{id}/force-delete', [TaskController::class, 'forceDelete']);
+            Route::post('tasks/{id}/restore', [TaskController::class, 'restore']);
             // Task Routes for crud
             Route::apiResource('tasks', TaskController::class) ;
 
             Route::post('task/{id}/restore', [TaskController::class,'restore']) ; 
             Route::delete('task/{id}/force-delete', [TaskController::class,'forceDelete']) ; 
             Route::get('/filter-by-status', [TaskController::class,'taskFilter']) ; 
+
+            
+
         });
 
     

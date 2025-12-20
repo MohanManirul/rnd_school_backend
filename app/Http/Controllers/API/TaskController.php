@@ -83,7 +83,7 @@ class TaskController extends BaseApiController
         }
     }
 
-    public function forceDelete($id):JsonResponse
+    public function forceDelete($id)
     {
        try {
             $task = Task::withTrashed()->findOrFail($id) ;
@@ -98,6 +98,7 @@ class TaskController extends BaseApiController
     //search
     public function taskFilter(Request $request)
         {
+        
             $validated = $request->validate([
                 'status' => 'required|in:new,in_progress,completed,canceled',
             ]);
@@ -116,5 +117,23 @@ class TaskController extends BaseApiController
                 return $this->error('Failed to filter task',500,$e );
             }
         }
+
+        //trashed tasks
+        public function trashed():JsonResponse
+        {
+            try{
+                $user = Auth::user();
+                $tasks = $user->tasks()
+                        ->onlyTrashed()
+                        ->latest()
+                        ->paginate(10);
+                return $this->success( new TaskCollection($tasks),'Trashed tasks fetched successfully');
+            }catch(\Throwable $e){
+                return $this->error('Failed to fetch trashed tasks',500,$e );
+            }
+        }
+
+    
+       
 
 }
