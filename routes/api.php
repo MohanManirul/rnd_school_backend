@@ -5,10 +5,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\TaskController;
+use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\Backend\ModuleController;
 use App\Http\Controllers\Backend\UserModule\DashboardController;
 
 Route::prefix('v1')->group(function () {
+
+    // ecom with vue
+    Route::get('/UserLogin/{UserEmail}', [UserController::class, 'UserLogin']);
 
     // Auth routes
     Route::controller(AuthController::class)->group(function () {
