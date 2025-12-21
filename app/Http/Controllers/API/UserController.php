@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Helper\JWTToken;
 use App\Http\Controllers\API\Base\BaseApiController;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\User\UserResource;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Mail;
 
 class UserController extends BaseApiController
 {
-    public function UserLogin(Request $request)
+    public function UserLogin(Request $request):JsonResponse
         {
             try{
                 $UserEmail  = $request->UserEmail;
@@ -29,4 +30,27 @@ class UserController extends BaseApiController
             }
             
         }
+
+    public function VerifyLogin(Request $request)
+    {
+        
+        try{
+            $UserEmail  = $request->UserEmail;
+            $OTP        = $request->OTP;
+            $user       = User::where('email',$UserEmail)->where('otp',$OTP)->first();
+            if(!$user) {
+                return $this->error('Invalid credentials', 401);
+            }else{
+                User::where('email',$UserEmail)->where('otp',$OTP)->update(['otp'=>'0']);
+                $token=JWTToken::CreateToken($UserEmail,$user->id);
+                return $this->success([
+                    'user' => new UserResource($user),
+                    'token' => $token,
+                ], 200);
+            }
+            
+            }catch(\Throwable $e){
+                return $this->error('Something went Wrong',500,$e );
+        }
+    }
 }

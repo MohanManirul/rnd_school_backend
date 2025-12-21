@@ -14,8 +14,6 @@ class DatabaseSeeder extends Seeder
 
             SuperAdminSeeder::class,
             MenusSeeder::class,
-            UserGroupsSeeder::class,
-            AccessControlsSeeder::class
             // ModuleSeeder::class,
             // SubModuleSeeder::class,
             // PermissionSeeder::class,

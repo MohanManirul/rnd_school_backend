@@ -11,10 +11,13 @@ use App\Http\Controllers\Backend\UserModule\DashboardController;
 
 Route::prefix('v1')->group(function () {
 
-    // ecom with vue
-    Route::get('/UserLogin/{UserEmail}', [UserController::class, 'UserLogin']);
+    // ecom with vue Auth routes 
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/UserLogin/{UserEmail}', 'UserLogin')->name('UserLogin');
+        Route::post('/VerifyLogin/{UserEmail}/{OTP}', 'VerifyLogin')->name('VerifyLogin');
+        
+    });
 
-    // Auth routes
     Route::controller(AuthController::class)->group(function () {
         Route::post('/register', 'register')->name('register');
         Route::post('/login', 'login')->name('login');
