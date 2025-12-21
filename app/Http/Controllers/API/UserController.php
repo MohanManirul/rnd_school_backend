@@ -23,7 +23,7 @@ class UserController extends BaseApiController
                 Mail::to($UserEmail)->send(new OTPMail($details));
                 User::updateOrCreate(['email' => $UserEmail], ['email'=>$UserEmail,'otp'=>$OTP]);
 
-                return $this->success('A 6 Digit OTP $OTP has been send to your email address',200);
+                return $this->success("A 6 Digit OTP {$OTP} has been sent to your email address",200);
             }catch(\Throwable $e){
                 return $this->error('Something went Wrong',500,$e );
             }
