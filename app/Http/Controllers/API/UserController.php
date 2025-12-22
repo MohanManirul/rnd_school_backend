@@ -53,4 +53,10 @@ class UserController extends BaseApiController
                 return $this->error('Something went Wrong',500,$e );
         }
     }
+
+    //logout
+    public function UserLogout(){
+        
+        return redirect('/');
+    }
 }

@@ -15,7 +15,7 @@ Route::prefix('v1')->group(function () {
     Route::controller(UserController::class)->group(function () {
         Route::get('/UserLogin/{UserEmail}', 'UserLogin')->name('UserLogin');
         Route::post('/VerifyLogin/{UserEmail}/{OTP}', 'VerifyLogin')->name('VerifyLogin');
-        
+        Route::get('/logout','UserLogout')->name('logout');
     });
 
     Route::controller(AuthController::class)->group(function () {
