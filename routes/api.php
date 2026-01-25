@@ -54,36 +54,6 @@ Route::prefix('v1')->group(function () {
         });
 
     
-
-});
-
-
-
-  Route::controller(ModuleController::class)->group(function () {
-            Route::get('/modules', 'modules')->name('modules');
-        });
-
-    Route::controller(ModuleController::class)->group(function () {
-        Route::get('/modules', 'modules')->name('modules');
-    });
-
-Route::prefix('/admindashboard')
-    ->name('superadmin.')
-    ->middleware(['jwt'])
-    ->group(function () {
-
-        // 🟢 DashboardController routes
-        Route::controller(DashboardController::class)->group(function () {
-            Route::get('/', 'dashboard')->name('dashboard');
-        });
-
-        // 🟢 DashboardController routes
-      
-
-        // 🟢 Include additional route files
-        require_once base_path('routes/backend/shift.php');
-    });
-
     Route::get('/', [HomeController::class, 'HomePage']);
     Route::get('/by-category', [CategoryController::class, 'ByCategoryPage']);
     Route::get('/by-brand', [BrandController::class, 'ByBrandPage']);
@@ -156,3 +126,33 @@ Route::prefix('/admindashboard')
     Route::post("/PaymentCancel",[InvoiceController::class,'PaymentCancel']);
     Route::post("/PaymentFail",[InvoiceController::class,'PaymentFail']);
     Route::post("/PaymentIPN",[InvoiceController::class,'PaymentIPN']);
+
+
+});
+
+
+
+  Route::controller(ModuleController::class)->group(function () {
+            Route::get('/modules', 'modules')->name('modules');
+        });
+
+    Route::controller(ModuleController::class)->group(function () {
+        Route::get('/modules', 'modules')->name('modules');
+    });
+
+Route::prefix('/admindashboard')
+    ->name('superadmin.')
+    ->middleware(['jwt'])
+    ->group(function () {
+
+        // 🟢 DashboardController routes
+        Route::controller(DashboardController::class)->group(function () {
+            Route::get('/', 'dashboard')->name('dashboard');
+        });
+
+        // 🟢 DashboardController routes
+      
+
+        // 🟢 Include additional route files
+        require_once base_path('routes/backend/shift.php');
+    });

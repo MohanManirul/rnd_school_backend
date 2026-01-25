@@ -12,13 +12,18 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
 
-            SuperAdminSeeder::class,
-            MenusSeeder::class,
+            // SuperAdminSeeder::class,
+            // MenusSeeder::class,
+            // CategorySeeder::class,
+            // BrandSeeder::class,
+            // ProductSeeder::class,
+            // ProductSliderSeeder::class
+            // ProductDetailsSeeder::class
             // ModuleSeeder::class,
             // SubModuleSeeder::class,
             // PermissionSeeder::class,
             // RoleSeeder::class,
-            // // AboutSeeder::class,
+            // AboutSeeder::class,
             // UserSeeder::class,
             // InstituteSeeder::class,
             // SchoolClassSeeder::class // run this seeder after creating medium table data , where primary id must be 1,2,3
