@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             // RoleSeeder::class,
             // AboutSeeder::class,
             // UserSeeder::class,
+            // CustomerProfileSeeder::class,
+            ReviewSeeder::class,
             // InstituteSeeder::class,
             // SchoolClassSeeder::class // run this seeder after creating medium table data , where primary id must be 1,2,3
             // // AppSettingSeeder::class
