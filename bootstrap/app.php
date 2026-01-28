@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\TokenAuthenticate;
 use App\Http\Middleware\TokenVerificationMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -15,7 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->validateCsrfTokens(except: ['*']);
         $middleware->alias([
-            'jwt' => TokenVerificationMiddleware::class
+            'jwt' => TokenVerificationMiddleware::class,
+            'user-jwt' => TokenAuthenticate::class
+            
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

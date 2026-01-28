@@ -25,11 +25,11 @@ Route::prefix('v1')->group(function () {
         Route::get('/logout','UserLogout')->name('logout');
     });
 
-    Route::controller(AuthController::class)->group(function () {
-        Route::post('/register', 'register')->name('register');
-        Route::post('/login', 'login')->name('login');
+    // Route::controller(AuthController::class)->group(function () {
+    //     Route::post('/register', 'register')->name('register');
+    //     Route::post('/login', 'login')->name('login');
         
-    });
+    // });
 
            
     // Profile routes (Protected)
@@ -81,13 +81,6 @@ Route::prefix('v1')->group(function () {
     Route::get('/ListReviewByProduct/{product_id}', [ProductController::class, 'ListReviewByProduct']);
     //policy
     Route::get("/PolicyByType/{type}",[PolicyController::class,'PolicyByType']);
-
-
-
-    // User Auth
-    Route::get('/UserLogin/{UserEmail}', [UserController::class, 'UserLogin']);
-    Route::get('/VerifyLogin/{UserEmail}/{OTP}', [UserController::class, 'VerifyLogin']);
-    Route::get('/logout',[UserController::class,'UserLogout']);
 
 
     // User Profile

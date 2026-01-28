@@ -75,10 +75,14 @@ class ProductController extends Controller
 
 
 
-    public function CreateProductReview(Request $request):JsonResponse{
-        $user_id=$request->header('id');
+    public function CreateProductReview(Request $request){
+        
+         $user_id = auth('sanctum')->id();
+        return response()->json([
+                'user_id' => $user_id
+        ] );
         $profile=CustomerProfile::where('user_id',$user_id)->first();
-
+ 
         if($profile){
             $request->merge(['customer_id' =>$profile->id]);
             $data=ProductReview::updateOrCreate(
