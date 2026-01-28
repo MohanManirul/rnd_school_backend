@@ -22,9 +22,16 @@ Route::prefix('v1')->group(function () {
     Route::controller(UserController::class)->group(function () {
         Route::get('/UserLogin/{UserEmail}', 'UserLogin')->name('UserLogin');
         Route::post('/VerifyLogin/{UserEmail}/{OTP}', 'VerifyLogin')->name('VerifyLogin');
-        Route::get('/logout','UserLogout')->name('logout');
+        
     });
 
+    Route::controller(UserController::class)->group(function () {
+       Route::get('/logout','UserLogout')->name('logout')->middleware([TokenAuthenticate::class]);
+       Route::get('/check-auth','checkAuth')->name('checkAuth')->middleware([TokenAuthenticate::class]);
+        
+    });
+
+    
     // Route::controller(AuthController::class)->group(function () {
     //     Route::post('/register', 'register')->name('register');
     //     Route::post('/login', 'login')->name('login');
@@ -33,25 +40,23 @@ Route::prefix('v1')->group(function () {
 
            
     // Profile routes (Protected)
-    Route::middleware('auth:sanctum')
-        ->controller(ProfileController::class)
-        ->group(function () {
-            Route::get('/me', 'me')->name('me');
-            Route::post('/logout', 'logout')->name('logout');
-            Route::patch('/profile-update', 'profileUpdate')->name('profile.update');
-            Route::get('tasks/trashed', [TaskController::class, 'trashed']);
-            Route::delete('tasks/{id}/force-delete', [TaskController::class, 'forceDelete']);
-            Route::post('tasks/{id}/restore', [TaskController::class, 'restore']);
-            // Task Routes for crud
-            Route::apiResource('tasks', TaskController::class) ;
+    // Route::middleware('auth:sanctum')
+    //     ->controller(ProfileController::class)
+    //     ->group(function () {
+    //         Route::get('/me', 'me')->name('me');
+    //         Route::post('/logout', 'logout')->name('logout');
+    //         Route::patch('/profile-update', 'profileUpdate')->name('profile.update');
+    //         Route::get('tasks/trashed', [TaskController::class, 'trashed']);
+    //         Route::delete('tasks/{id}/force-delete', [TaskController::class, 'forceDelete']);
+    //         Route::post('tasks/{id}/restore', [TaskController::class, 'restore']);
+    //         // Task Routes for crud
+    //         Route::apiResource('tasks', TaskController::class) ;
 
-            Route::post('task/{id}/restore', [TaskController::class,'restore']) ; 
-            Route::delete('task/{id}/force-delete', [TaskController::class,'forceDelete']) ; 
-            Route::get('/filter-by-status', [TaskController::class,'taskFilter']) ; 
+    //         Route::post('task/{id}/restore', [TaskController::class,'restore']) ; 
+    //         Route::delete('task/{id}/force-delete', [TaskController::class,'forceDelete']) ; 
+    //         Route::get('/filter-by-status', [TaskController::class,'taskFilter']) ; 
 
-            
-
-        });
+    //     });
 
     
     Route::get('/', [HomeController::class, 'HomePage']);
@@ -81,6 +86,13 @@ Route::prefix('v1')->group(function () {
     Route::get('/ListReviewByProduct/{product_id}', [ProductController::class, 'ListReviewByProduct']);
     //policy
     Route::get("/PolicyByType/{type}",[PolicyController::class,'PolicyByType']);
+
+
+
+    // User Auth
+    Route::get('/UserLogin/{UserEmail}', [UserController::class, 'UserLogin']);
+    Route::get('/VerifyLogin/{UserEmail}/{OTP}', [UserController::class, 'VerifyLogin']);
+    Route::get('/logout',[UserController::class,'UserLogout']);
 
 
     // User Profile

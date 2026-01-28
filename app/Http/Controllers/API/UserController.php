@@ -44,9 +44,20 @@ class UserController extends BaseApiController
                 User::where('email',$UserEmail)->where('otp',$OTP)->update(['otp'=>'0']);
                 $token=JWTToken::CreateToken($UserEmail,$user->id);
                 return $this->success([
-                    'user' => new UserResource($user),
-                    'token' => $token,
-                ], 200);
+                        'user' => new UserResource($user),
+                        'token' => $token
+                    ], 200)->cookie(
+                        'token',      // name
+                        $token,       // value
+                        60*24*30,     // 30 days in minutes
+                        '/',          // path
+                        null,         // domain
+                        true,         // secure (HTTPS)
+                        true,         // httpOnly
+                        false,
+                        'Lax'         // SameSite
+                    );
+
             }
             
             }catch(\Throwable $e){
@@ -57,6 +68,27 @@ class UserController extends BaseApiController
     //logout
     public function UserLogout(){
         
-        return redirect('/');
+         return redirect('/');
     }
+
+    public function checkAuth(Request $request)
+    {
+        $token = $request->cookie('token');
+
+        if (!$token) {
+            return response()->json(['auth' => false], 401);
+        }
+
+        $user = JWTToken::VerifyToken($token);
+
+        if (!$user) {
+            return response()->json(['auth' => false], 401);
+        }
+
+        return response()->json([
+            'auth' => true,
+            'user' => $user
+        ]);
+    }
+
 }
