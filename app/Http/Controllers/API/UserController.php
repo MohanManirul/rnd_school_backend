@@ -47,16 +47,16 @@ class UserController extends BaseApiController
                         'user' => new UserResource($user),
                         'token' => $token
                     ], 200)->cookie(
-                        'token',      // name
-                        $token,       // value
-                        60*24*30,     // 30 days in minutes
-                        '/',          // path
-                        null,         // domain
-                        true,         // secure (HTTPS)
-                        true,         // httpOnly
-                        false,
-                        'Lax'         // SameSite
-                    );
+                            'token',
+                            $token,         // value
+                            60*24*30,       // minutes (30 days)
+                            '/',            // path
+                            null,           // domain (null is fine)
+                            false,          // secure (HTTPS হলে true)
+                            true,           // httpOnly (JS access চাইলে false)
+                            false,          // raw
+                            'None'          // sameSite 
+                        );
 
             }
             

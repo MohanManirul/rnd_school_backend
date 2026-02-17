@@ -121,7 +121,8 @@ class ProductController extends Controller
         return ResponseHelper::Out('success',$data,200);
     }
 
-    public function CreateCartList(Request $request):JsonResponse{
+    public function CreateCartList(Request $request)
+    {
         $user_id=$request->header('id');
         $product_id =$request->input('product_id');
         $color=$request->input('color');
