@@ -72,7 +72,7 @@ class UserController extends BaseApiController
     }
 
     public function checkAuth(Request $request)
-    {
+    { 
         $token = $request->cookie('token');
 
         if (!$token) {
@@ -87,7 +87,8 @@ class UserController extends BaseApiController
 
         return response()->json([
             'auth' => true,
-            'user' => $user
+            'user' => $user,
+            'token'=> $token 
         ]);
     }
 
