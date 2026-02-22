@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Mail\OTPMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cookie;
 
 class UserController extends BaseApiController
 {
@@ -25,8 +26,11 @@ class UserController extends BaseApiController
                 User::updateOrCreate(['email' => $UserEmail], ['email'=>$UserEmail,'otp'=>$OTP]);
 
                 return $this->success("A 6 Digit OTP {$OTP} has been sent to your email address",200);
-            }catch(\Throwable $e){
-                return $this->error('Something went Wrong',500,$e );
+            }catch (\Throwable $e) {
+                return response()->json([
+                    'message' => 'Something went wrong',
+                    'error'   => $e->getMessage()
+                ], 500);
             }
             
         }
@@ -52,7 +56,7 @@ class UserController extends BaseApiController
                             60*24*30,       // minutes (30 days)
                             '/',            // path
                             null,           // domain (null is fine)
-                            false,          // secure (HTTPS হলে true)
+                            true,          // secure (HTTPS হলে true)
                             true,           // httpOnly (JS access চাইলে false)
                             false,          // raw
                             'None'          // sameSite 
@@ -68,7 +72,11 @@ class UserController extends BaseApiController
     //logout
     public function UserLogout(){
         
-         return redirect('/');
+        return response()->json([
+            'message' => 'log out ok'
+        ])->withCookie(
+            cookie('token', null, -1, '/', null, true, true, false, 'None')
+        );
     }
 
     public function checkAuth(Request $request)
