@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Helper\ResponseHelper;
 use App\Http\Controllers\API\Base\BaseApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\UpdateProfileRequest;
 use App\Http\Resources\User\UserResource;
+use App\Models\CustomerProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -13,22 +15,12 @@ use Illuminate\Support\Facades\Cache;
 
 class ProfileController extends BaseApiController
 {
-    public function me(Request $request)
+    public function ReadProfile(Request $request)
         {
            
-            $user = $request->user();
-
-            $cacheKey = "user_profile_{$user->id}" ;
-            $cached = Cache::remember($cacheKey , now()->addHour(1),function() use($user){
-                return new UserResource($user) ;
-            }) ;
-
-            if(Cache::has($cacheKey)){
-                logger("profile loaded from cache: {$cacheKey}") ;
-                return $this->success($cached, 'User profile retrieved successfully');
-            }else{
-                logger("profile cache miss , hitting DB: {$cacheKey}") ;
-            }
+            $user_id=$request->header('id');
+            $data=CustomerProfile::where('user_id',$user_id)->with('user')->first();
+            return ResponseHelper::Out('success',$data,200);
             
         }
 

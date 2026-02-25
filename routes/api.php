@@ -20,6 +20,7 @@ Route::prefix('v1')->group(function () {
 
     // ecom with vue Auth routes 
     Route::controller(UserController::class)->group(function () {
+        
         Route::get('/UserLogin/{UserEmail}', 'UserLogin')->name('UserLogin');
         Route::post('/VerifyLogin/{UserEmail}/{OTP}', 'VerifyLogin')->name('VerifyLogin');
         
