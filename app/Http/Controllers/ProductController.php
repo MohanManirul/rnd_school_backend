@@ -77,22 +77,30 @@ class ProductController extends Controller
 
     public function CreateProductReview(Request $request){
         
-         $user_id = auth('sanctum')->id();
-        return response()->json([
-                'user_id' => $user_id
-        ] );
-        $profile=CustomerProfile::where('user_id',$user_id)->first();
- 
-        if($profile){
-            $request->merge(['customer_id' =>$profile->id]);
-            $data=ProductReview::updateOrCreate(
-                ['customer_id' => $profile->id,'product_id'=>$request->input('product_id')],
-                $request->input()
-            );
-            return ResponseHelper::Out('success',$data,200);
-        }
-        else{
-            return ResponseHelper::Out('fail','Customer profile not exists',200);
+        try {
+            $user_id = $request->header('id');
+            $profile = CustomerProfile::where('user_id',$user_id)->first();
+
+            if($profile){
+               $request->merge(['customer_id' =>$profile->id]);
+
+                $data = ProductReview::updateOrCreate(
+                    [
+                        'customer_id'   =>  $profile->id,
+                        'product_id'    =>  $request->input('product_id'),
+                        "product_id"    => $request->input('product_id'),
+                        "description"   => $request->input('description'),
+                        "rating"        => $request->input('rating')
+                    ],
+                );
+                
+                return ResponseHelper::Out('success',$data,200);
+            } else {
+                return ResponseHelper::Out('fail','Customer profile not exists',200);
+            }
+
+        } catch (\Throwable $e) {
+            return ResponseHelper::Out('error', $e->getMessage(), 500);
         }
 
     }
