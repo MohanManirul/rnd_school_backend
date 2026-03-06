@@ -26,7 +26,7 @@ class UserController extends Controller
 
 
     public function UserLogin(Request $request):JsonResponse
-    {
+    { 
         try {
             $UserEmail=$request->UserEmail;
             $OTP=rand (100000,999999);
