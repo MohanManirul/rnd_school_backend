@@ -24,21 +24,16 @@ class ProfileController extends BaseApiController
             
         }
 
-    public function profileUpdate(UpdateProfileRequest $request)
-        {
-            $user = Auth::user();
-            $data = $request->validated();
-            if (isset($data['password'])) {
-                $data['password'] = bcrypt($data['password']);
-            }
-
-            $user->update($data);
-            //update cache
-            $cacheKey = "user_profile_{$user->id}";
-            Cache::put($cacheKey, new UserResource($user), now()->addHour(1));
-            return $this->success(new UserResource($user), 'Profile updated successfully');
-    
-        }
+     public function CreateProfile(Request $request)
+    {
+        $user_id=$request->header('id');
+        $request->merge(['user_id' =>$user_id]);
+        $data= CustomerProfile::updateOrCreate(
+            ['user_id' => $user_id],
+            $request->input()
+        );
+        return ResponseHelper::Out('success',$data,200);
+    }
     
     
     public function logout(Request $request)

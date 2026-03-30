@@ -37,7 +37,7 @@ class UserController extends BaseApiController
 
     public function VerifyLogin(Request $request)
     {
-        
+          
         try{
             $UserEmail  = $request->UserEmail;
             $OTP        = $request->OTP;
