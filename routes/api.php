@@ -128,10 +128,4 @@ Route::prefix('/admindashboard')
         Route::controller(DashboardController::class)->group(function () {
             Route::get('/', 'dashboard')->name('dashboard');
         });
-
-        // 🟢 DashboardController routes
-      
-
-        // 🟢 Include additional route files
-        require_once base_path('routes/backend/shift.php');
     });
