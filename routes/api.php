@@ -89,6 +89,7 @@ Route::prefix('v1')->group(function () {
     // Product Cart
     Route::post('/CreateCartList', [ProductController::class, 'CreateCartList'])->middleware([TokenAuthenticate::class]);
     Route::get('/CartList', [ProductController::class, 'CartList'])->middleware([TokenAuthenticate::class]);
+    Route::post('/CartUpdate', [ProductController::class, 'CartUpdate'])->middleware([TokenAuthenticate::class]);
     Route::get('/DeleteCartList/{product_id}', [ProductController::class, 'DeleteCartList'])->middleware([TokenAuthenticate::class]);
 
 

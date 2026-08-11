@@ -66,7 +66,7 @@ class InvoiceController extends Controller
                 ]);
             }
 
-           $paymentMethod=SslcommerzAccount::InitiatePayment($Profile,$payable,$tran_id,$user_email);
+           $paymentMethod=SSLCommerz::InitiatePayment($Profile,$payable,$tran_id,$user_email);
 
            DB::commit();
 
@@ -75,7 +75,7 @@ class InvoiceController extends Controller
         }
         catch (Exception $e) {
             DB::rollBack();
-            return ResponseHelper::Out('fail',$e,200);
+            return ResponseHelper::Out('fail',$e->getMessage(),200);
         }
 
     }

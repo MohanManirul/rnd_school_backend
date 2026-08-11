@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Http;
 class SSLCommerz
 {
 
-   static function  InitiatePayment($Profile,$payable,$tran_id,$user_email): array
+   static function  InitiatePayment($Profile,$payable,$tran_id,$user_email)
    {
       try{
           $ssl= SslcommerzAccount::first();
@@ -47,11 +47,14 @@ class SSLCommerz
               "product_profile"=>"Apple Shop Profile",
               "product_amount"=>$payable,
           ]);
-          return $response->json('desc');
+          return $response->json('GatewayPageURL');
       }
-      catch (Exception $e){
-          return $ssl;
-      }
+      catch (Exception $e) {
+             return [
+                'status' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
 
     }
 

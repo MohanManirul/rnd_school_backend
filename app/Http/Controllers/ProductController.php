@@ -180,4 +180,36 @@ class ProductController extends Controller
         return ResponseHelper::Out('success',$data,200);
     }
 
+    public function CartUpdate(Request $request)
+    {
+        $user_id=$request->header('id');
+        $product_id =$request->input('product_id');
+        $qty=$request->input('qty');
+
+        $UnitPrice=0;
+
+        $productDetails=Product::where('id','=',$product_id)->first();
+        if($productDetails->discount==1){
+            $UnitPrice=$productDetails->discount_price;
+        }
+        else{
+            $UnitPrice=$productDetails->price;
+        }
+        $totalPrice=$qty*$UnitPrice;
+
+
+        $data=ProductCart::updateOrCreate(
+            ['user_id' => $user_id,'product_id'=>$product_id],
+            [
+                'user_id' => $user_id,
+                'product_id'=>$product_id,
+                'qty'=>$qty,
+                'price'=>$totalPrice
+            ]
+        );
+
+        return ResponseHelper::Out('success',$data,200);
+    }
+    
+
 }
